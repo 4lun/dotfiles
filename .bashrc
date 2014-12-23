@@ -64,9 +64,9 @@
 
 # COLOUR
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-	export PS1="\[\e[1;35;1m\]\u\[\e[0m\]\[\e[35m\]@\h\[\e[35;1m\]\w\[\e[1;37m\]\$(__git_ps1 \"[%s $(get_sha)] \")\$ \[\e[0m\]"
+	export PS1="\[\e[1;35;1m\]\u\[\e[0m\]\[\e[35m\]@\h:\[\e[35;1m\]\w\[\e[1;37m\]\$(__git_ps1 \"[%s $(get_sha)] \")\$ \[\e[0m\]"
 else
-	export PS1="\[\e[36;1m\]\u\[\e[0m\]\[\e[36m\]@\h\[\e[36;1m\]\w\[\e[1;37m\]\n\$(__git_ps1 \"[%s $(get_sha)] \")\$ \[\e[0m\]"
+	export PS1="\[\e[36;1m\]\u\[\e[0m\]\[\e[36m\]@\h:\[\e[36;1m\]\w\[\e[1;37m\]\n\$(__git_ps1 \"[%s $(get_sha)] \")\$ \[\e[0m\]"
 fi
 
 # For reference, white on red, good for use on root user
