@@ -3,6 +3,9 @@
 	alias ..="cd ../"
 	alias hosts="subl /private/etc/hosts"
 
+# Vagrant homestead
+	alias vmh="ssh vagrant@127.0.0.1 -p 2222"
+
 # Show which commands you use the most - Source: http://alias.sh/show-which-commands-you-use-most
 	alias freq='cut -f1 -d" " ~/.bash_history | sort | uniq -c | sort -nr | head -n 30'
 
