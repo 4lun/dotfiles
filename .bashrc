@@ -63,7 +63,7 @@
 
 # SOURCES
 # Load in the git branch prompt script.
-	source ~/Development/4lun/dotfiles/git-prompt.sh
+	source $DOTFILES/git-prompt.sh
 
 # COLOUR
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
