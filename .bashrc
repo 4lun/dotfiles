@@ -50,9 +50,9 @@
 
 # EXPORTS
 # Editors
-	export EDITOR='subl -w'
-	export SVN_MERGE='subl -w'
-	export SVN_EDITOR='subl -w'
+	export EDITOR='subl'
+	export SVN_MERGE='subl'
+	export SVN_EDITOR='subl'
 
 # Git PS1
 	export GIT_PS1_SHOWDIRTYSTATE=1
@@ -67,13 +67,13 @@
 
 # COLOUR
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-	export PS1="\[\e[1;35;1m\]\u\[\e[0m\]\[\e[35m\]@\h:\[\e[35;1m\]\w\n[\e[1;37m\]"'$(
-    if [[ $(__git_ps1) =~ master ]]
+	export PS1="\n\[\e[1;35;1m\]\u\[\e[0m\]\[\e[35m\]@\h:\[\e[35;1m\]\w\n[\e[1;37m\]"'$(
+    if [[ $(__git_ps1) == *"master"* ]]
 	then echo "\[\e[1;41m\]"
 	fi)'"\$(__git_ps1 \"[%s$(get_sha)]\[\e[0m\] \")\[\e[1;37m\]\$ \[\e[0m\]"
 else
-	export PS1="\[\e[36;1m\]\u\[\e[0m\]\[\e[36m\]@\h:\[\e[36;1m\]\w\n\[\e[1;37m\]"'$(
-    if [[ $(__git_ps1) =~ master ]]
+	export PS1="\n\[\e[36;1m\]\u\[\e[0m\]\[\e[36m\]@\h:\[\e[36;1m\]\w\n\[\e[1;37m\]"'$(
+    if [[ $(__git_ps1) == *"master"* ]]
 	then echo "\[\e[1;41m\]"
 	fi)'"\$(__git_ps1 \"[%s$(get_sha)]\[\e[0m\] \")\[\e[1;37m\]\$ \[\e[0m\]"
 fi
