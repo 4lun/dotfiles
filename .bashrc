@@ -43,6 +43,10 @@
 	    git rev-parse --short HEAD 2>/dev/null
 	}
 
+	git_track_all_remote() { # Track all remote branches
+		git branch -a | grep -v HEAD | perl -ne 'chomp($_); s|^\*?\s*||; if (m|(.+)/(.+)| && not $d{$2}) {print qq(git branch --track $2 $1/$2\n)} else {$d{$_}=1}' | csh -xfs
+	}
+
 # cd and then ls - Source: http://alias.sh/cd-and-then-ls
 	function cd () {
 		builtin cd "$@" && ls;
@@ -80,3 +84,5 @@ fi
 
 # For reference, white on red, good for use on root user
 # export PS1="\[\e[1;41m\]\u\[\e[0m\]\[\e[0;41m\]@\h\[\e[0;41m\]\w\n\[\e[1;37m\]\[\e[0m\]\$ "
+# For reference, purple ssh style, without git status
+# export PS1="\n\[\e[1;35;1m\]\u\[\e[0m\]\[\e[35m\]@\h:\[\e[35;1m\]\w\n\[\e[1;37m\]\$ \[\e[0m\]"
