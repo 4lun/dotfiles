@@ -1,4 +1,4 @@
 # Include in .bash_profile
 	
-	export DOTFILES="/full/path/to/dotfiles"
+	export DOTFILES="~/path-to-dotfiles-folder/"
 	source $DOTFILES/.bashrc
