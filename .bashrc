@@ -9,6 +9,9 @@
 	alias hosts="$EDITOR /private/etc/hosts"
 	alias vhosts="$EDITOR /etc/apache2/extra/httpd-vhosts.conf"
 
+# Simple server
+	alias server='python -m SimpleHTTPServer'
+
 # Vagrant homestead
 	alias vmh="ssh vagrant@127.0.0.1 -p 2222"
 
