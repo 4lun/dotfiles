@@ -1,7 +1,5 @@
 # Editors
-	export EDITOR='subl'
-	export SVN_MERGE='$EDITOR'
-	export SVN_EDITOR='$EDITOR'
+	export EDITOR='nano'
 
 # AIASES
 	alias dev="cd ~/Development/"
