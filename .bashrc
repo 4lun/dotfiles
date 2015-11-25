@@ -1,7 +1,7 @@
 # Editors
 	export EDITOR='nano'
 
-# AIASES
+# Aliases
 	alias dev="cd ~/Development/"
 	alias ..="cd ../"
 	alias hosts="$EDITOR /private/etc/hosts"
@@ -27,7 +27,6 @@
 	alias ls_dl_log="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'select LSQuarantineDataURLString from LSQuarantineEvent'"
 	alias rm_dl_log="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'vacuum'"
 
-# FUNCTIONS
 # Make and cd into directory - Source: http://alias.sh/make-and-cd-directory
 	function mcd() {
 	  mkdir -p "$1" && cd "$1";
@@ -53,11 +52,10 @@
 	export GIT_PS1_DESCRIBE_STYLE="branch"
 	export GIT_PS1_SHOWUPSTREAM="auto git"
 
-# SOURCES
 # Load in the git branch prompt script.
 	source $DOTFILES/git-prompt.sh
 
-# COLOUR (includes git status if available, requires git-prompt.sh)
+# Colour (includes git status if available, requires git-prompt.sh)
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
 	export PS1="\n\[\e[1;35;1m\]\u\[\e[0m\]\[\e[35m\]@\h:\[\e[35;1m\]\w\n\[\e[1;37m\]"'$(
     if [[ $(__git_ps1) == *"master"* ]]
