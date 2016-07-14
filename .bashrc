@@ -7,6 +7,15 @@
 	alias hosts="$EDITOR /private/etc/hosts"
 	alias vhosts="$EDITOR /etc/apache2/extra/httpd-vhosts.conf"
 
+# Local phpunit
+	phpunit() {
+            if [ -f "./vendor/bin/phpunit" ]; then
+		php ./vendor/bin/phpunit "$@";
+	    else
+		 echo "Unable to locate phpunit in ./vendor/bin";
+	    fi
+	}
+
 # Simple server
 	alias server='python -m SimpleHTTPServer'
 
@@ -28,7 +37,7 @@
 	alias rm_dl_log="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'vacuum'"
 
 # Make and cd into directory - Source: http://alias.sh/make-and-cd-directory
-	function mcd() {
+	mcd() {
 	  mkdir -p "$1" && cd "$1";
 	}
 
