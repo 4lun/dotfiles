@@ -61,6 +61,9 @@
 	export GIT_PS1_DESCRIBE_STYLE="branch"
 	export GIT_PS1_SHOWUPSTREAM="auto git"
 
+# Git global .gitignore
+	git config --global core.excludesfile $DOTFILES/global.gitignore
+
 # Load in the git branch prompt script.
 	source $DOTFILES/git-prompt.sh
 
