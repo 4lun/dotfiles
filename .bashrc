@@ -36,6 +36,9 @@
 	alias ls_dl_log="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'select LSQuarantineDataURLString from LSQuarantineEvent'"
 	alias rm_dl_log="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'vacuum'"
 
+# Cycle MAC address for WiFi adapter - Source: https://remysharp.com/2017/05/29/getting-free-wifi
+	alias freewifi="sudo ifconfig en0 ether `openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'`; sudo ifconfig en0 ether"
+
 # Make and cd into directory - Source: http://alias.sh/make-and-cd-directory
 	mcd() {
 	  mkdir -p "$1" && cd "$1";
