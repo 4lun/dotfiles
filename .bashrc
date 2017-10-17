@@ -4,8 +4,6 @@
 # Aliases
 	alias dev="cd ~/Development/"
 	alias ..="cd ../"
-	alias hosts="$EDITOR /private/etc/hosts"
-	alias vhosts="$EDITOR /etc/apache2/extra/httpd-vhosts.conf"
 
 # Local phpunit
 	phpunit() {
@@ -19,14 +17,8 @@
 # Simple server
 	alias server='python -m SimpleHTTPServer'
 
-# Vagrant homestead
-	alias vmh="ssh vagrant@127.0.0.1 -p 2222"
-
 # Show which commands you use the most - Source: http://alias.sh/show-which-commands-you-use-most
 	alias freq='cut -f1 -d" " ~/.bash_history | sort | uniq -c | sort -nr | head -n 30'
-
-# Remove ".svn" folders from working copy (recursive) - Source: http://alias.sh/remove-svn-folders-workingcopy-recursive
-	alias rm_svn="find . -type d -name .svn -exec rm -rf {} \;"
 
 # Reload DNS on OSX - Source: http://alias.sh/reload-dns-osx
 	alias flushdns="dscacheutil -flushcache"
