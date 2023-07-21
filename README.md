@@ -1,10 +1,16 @@
 # Dotfiles
 
+Clone locally:
 ```
-git clone git@github.com:4lun/dotfiles.git .dotfiles
+git clone git@github.com:4lun/dotfiles.git ~/.dotfiles
 ```
 
-Inside `.bashrc`
+Then for Zsh:
 ```
-	export DOTFILES="/home/user/.dotfiles"
-	source $DOTFILES/.bashrc
+echo "source ~/.dotfiles/.zshrc" >> ~/.zshrc
+```	
+
+Or for Bash:
+```
+echo "source ~/.dotfiles/.bashrc" >> ~/.bashrc
+```
