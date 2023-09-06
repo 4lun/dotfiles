@@ -64,3 +64,13 @@
 
 # Load in the git branch prompt script.
 	source $DOTFILES/git-prompt.sh
+
+# hey audio prompt - useful after "slow" commands to return attention (e.g. `yarn test; hey`)
+  hey() {
+		afplay $DOTFILES/hey.wav
+	}
+
+# beep audio prompt - bit more subtle
+	beep() {
+		afplay $DOTFILES/beep.wav
+	}
