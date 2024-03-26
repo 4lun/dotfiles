@@ -74,3 +74,7 @@
 	beep() {
 		afplay $DOTFILES/beep.wav
 	}
+
+# https://docs.github.com/en/copilot/github-copilot-in-the-cli/using-github-copilot-in-the-cli
+	alias explain="gh copilot explain"
+	alias suggest="gh copilot suggest"
