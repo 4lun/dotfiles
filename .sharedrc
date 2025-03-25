@@ -5,6 +5,9 @@
 	alias dev="cd ~/Development/"
 	alias ..="cd ../"
 
+# Add composer bin to path
+export PATH="$PATH:./vendor/bin"
+
 # Local phpunit
 	phpunit() {
             if [ -f "./vendor/bin/phpunit" ]; then
