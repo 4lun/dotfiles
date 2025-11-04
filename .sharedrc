@@ -52,8 +52,11 @@ export PATH="$PATH:./vendor/bin"
 		git branch -a | grep -v HEAD | perl -ne 'chomp($_); s|^\*?\s*||; if (m|(.+)/(.+)| && not $d{$2}) {print qq(git branch --track $2 $1/$2\n)} else {$d{$_}=1}' | csh -xfs
 	}
 
-	# git lg
+	# Git aliases
 	git config --global alias.lg "log --date=short --graph --pretty=format:'%C(124)%ad %C(24)%h %C(34)%an %C(252)%s%C(178)%d'"
+	git config --global alias.bc '!f() { git checkout "$1" 2>/dev/null || git checkout -b "$1"; }; f'
+	git config --global alias.please 'push --force-with-lease'
+	git config --global alias.stash-rename '!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git stash store -m "$2" $rev; }; _' # credit https://stackoverflow.com/a/25935360
 
 # Git PS1
 	export GIT_PS1_SHOWDIRTYSTATE=1
