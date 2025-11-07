@@ -53,7 +53,7 @@ export PATH="$PATH:./vendor/bin"
 	}
 
 	# Git aliases
-	git config --global alias.lg "log --date=short --graph --pretty=format:'%C(124)%ad %C(24)%h %C(34)%an %C(252)%s%C(178)%d'"
+	git config --global alias.lg "log --date=format:'%Y-%m-%d %H:%M' --graph --pretty=format:'%C(#c71a58)%ad %C(#36d4ec)%h %C(252)%s%C(#e0d56e)%d %C(#4a4943)%an <%ae>'"
 	git config --global alias.bc '!f() { git checkout "$1" 2>/dev/null || git checkout -b "$1"; }; f'
 	git config --global alias.please 'push --force-with-lease'
 	git config --global alias.stash-rename '!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git stash store -m "$2" $rev; }; _' # credit https://stackoverflow.com/a/25935360
