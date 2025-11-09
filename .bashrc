@@ -15,6 +15,7 @@ else
 fi
 
 # For reference, white on red, good for use on root user
-# export PS1="\[\e[1;41m\]\u\[\e[0m\]\[\e[0;41m\]@\h\[\e[0;41m\]\w\n\[\e[1;37m\]\[\e[0m\]\$ "
+# export PS1="\[\e[1;41m\]\u\[\e[22m\]@\h\[\e[0m\]\[\e[38;5;95m\]:\[\e[91m\]\w\[\e[0m\]\n\$ "
+
 # For reference, purple ssh style, without git status
 # export PS1="\n\[\e[1;35;1m\]\u\[\e[0m\]\[\e[35m\]@\h:\[\e[35;1m\]\w\n\[\e[1;37m\]\$ \[\e[0m\]"

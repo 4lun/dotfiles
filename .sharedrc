@@ -72,11 +72,16 @@ export PATH="$PATH:./vendor/bin"
 	source $DOTFILES/git-prompt.sh
 
 # hey audio prompt - useful after "slow" commands to return attention (e.g. `yarn test; hey`)
-  hey() {
+  	hey() {
 		afplay $DOTFILES/hey.wav -v 5
 	}
 
 # beep audio prompt - bit more subtle
 	beep() {
 		afplay $DOTFILES/beep.wav -v 10
+	}
+
+# ouput all ANSI colors
+	allAnsiColors() {
+		for i in {0..255}; do printf "\e[38;5;${i}m%3d " $i; done; echo; printf "\e[0m"
 	}
