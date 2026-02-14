@@ -192,3 +192,6 @@ xcuserdata/
 /*.gcno
 
 # End of https://www.gitignore.io/api/osx,git,xcode,linux,windows,intellij,sublimetext
+
+### Claude Code ###
+.claude
