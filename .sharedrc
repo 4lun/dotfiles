@@ -73,12 +73,12 @@ export PATH="$PATH:./vendor/bin"
 
 # hey audio prompt - useful after "slow" commands to return attention (e.g. `yarn test; hey`)
   	hey() {
-		afplay $DOTFILES/hey.wav -v 5
+		afplay $DOTFILES/sounds/Hey.aiff -v 5
 	}
 
 # beep audio prompt - bit more subtle
 	beep() {
-		afplay $DOTFILES/beep.wav -v 10
+		afplay $DOTFILES/sounds/Beep.aiff -v 10
 	}
 
 # ouput all ANSI colors
