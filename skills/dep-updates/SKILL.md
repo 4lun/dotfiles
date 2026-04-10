@@ -1,7 +1,7 @@
 ---
 name: dep-updates
-description: Loop over project dependencies and perform version updates. Accepts a level argument (max, urgent, safe, standard) to control update scope and risk tolerance.
-argument-hint: <max|urgent|safe|standard>
+description: Loop over project dependencies and perform version updates. Accepts a level argument (standard, safe, urgent, max) to control update scope and risk tolerance.
+argument-hint: <standard|safe|urgent|max>
 allowed-tools: Read, Edit, Write, Grep, Glob, Bash(git *), Bash(gh *), Bash(npm *), Bash(npx *), Bash(composer *), Bash(./vendor/*), Bash(php *), WebFetch, WebSearch, Agent
 ---
 
@@ -9,18 +9,11 @@ allowed-tools: Read, Edit, Write, Grep, Glob, Bash(git *), Bash(gh *), Bash(npm 
 
 Update project dependencies at the level specified by `$ARGUMENTS`.
 
-Valid levels: `max`, `urgent`, `safe`, `standard`. If no level is provided, or the value is unrecognised, ask the user which level to use before proceeding.
+Valid levels: `standard`, `safe`, `urgent`, `max`. If no level is provided, default to `standard`. If the value is unrecognised, ask the user which level to use before proceeding.
 
 ---
 
 ## Level definitions
-
-### `safe`
-Update all dependencies to the latest **patch and minor** versions only. This level is designed to run unattended with minimal risk.
-
-- Skip any update that would cross a major version boundary.
-- After applying updates, run the full verification suite (see §Verification below).
-- Commit the result without asking — no approval step needed.
 
 ### `standard`
 Everything in `safe`, **plus**:
@@ -29,6 +22,13 @@ Everything in `safe`, **plus**:
 - For each candidate major bump, read the changelog or release notes (see §Changelogs). If the changes look safe, apply the update, adapt code if necessary, and include it.
 - For major bumps that look risky or require significant code changes, **do not apply them** — instead list them at the end as suggested follow-up steps with a brief summary of what would be involved.
 - Seek approval before committing if any major version updates were applied.
+
+### `safe`
+Update all dependencies to the latest **patch and minor** versions only. This level is designed to run unattended with minimal risk.
+
+- Skip any update that would cross a major version boundary.
+- After applying updates, run the full verification suite (see §Verification below).
+- Commit the result without asking — no approval step needed.
 
 ### `urgent`
 Update **only** dependencies that have known security vulnerabilities.
