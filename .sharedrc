@@ -71,14 +71,27 @@ export PATH="$PATH:./vendor/bin"
 # Load in the git branch prompt script.
 	source $DOTFILES/git-prompt.sh
 
+# cross-platform sound playback
+	_play_sound() {
+		local file="$1" vol="$2"
+		if command -v afplay &>/dev/null; then
+			afplay "$file" -v "$vol"
+		elif command -v pw-play &>/dev/null; then
+			pw-play --volume="$(echo "$vol / 10" | bc -l)" "$file"
+		elif command -v aplay &>/dev/null; then
+			# aplay has no volume flag — plays at system volume
+			aplay -q "$file"
+		fi
+	}
+
 # hey audio prompt - useful after "slow" commands to return attention (e.g. `yarn test; hey`)
-  	hey() {
-		afplay $DOTFILES/sounds/Hey.aiff -v 5
+	hey() {
+		_play_sound $DOTFILES/sounds/Hey.aiff 5
 	}
 
 # beep audio prompt - bit more subtle
 	beep() {
-		afplay $DOTFILES/sounds/Beep.aiff -v 10
+		_play_sound $DOTFILES/sounds/Beep.aiff 10
 	}
 
 # ouput all ANSI colors
