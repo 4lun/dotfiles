@@ -12,3 +12,5 @@ Consider if it makes sense to amend or fixup existing commits in this branch, ra
 If we're on the main branch, please stop and ask for confirmation that we really want to commit directly to main, rather than creating a new branch and making a pull request.
 
 BTW don't offer to push to remote or generate PRs, focus on just making the commits locally.
+
+Never use em dashes (—) in commit messages. Use regular dashes (-) or reword instead.
