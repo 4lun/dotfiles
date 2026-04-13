@@ -1,6 +1,9 @@
 export DOTFILES=$(dirname $BASH_SOURCE)
 source $DOTFILES/.sharedrc
 
+# Set window title to current directory name
+PROMPT_COMMAND='printf "\e]0;%s\a" "${PWD##*/}"'
+
 # Colour (includes git status if available, requires git-prompt.sh)
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
 	export PS1="\n\[\e[1;35;1m\]\u\[\e[0m\]\[\e[35m\]@\h:\[\e[35;1m\]\w\n\[\e[1;37m\]"'$(
