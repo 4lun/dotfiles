@@ -24,11 +24,11 @@ Perform final checks and merge the open PR for the current branch.
    - Run `gh api repos/{owner}/{repo}/pulls/{number}/reviews --jq '.[] | {user: .user.login, state: .state}'` to get reviews.
    - Run `gh api repos/{owner}/{repo}/pulls/{number}/comments --jq '.[] | {user: .user.login}'` to get inline comment authors.
    - Run `gh api repos/{owner}/{repo}/issues/{number}/comments --jq '.[] | {user: .user.login}'` to get top-level comment authors.
-   - Run `gh api repos/{owner}/{repo}/issues/{number}/reactions --jq '.[] | {user: .user.login, content: .content}'` to check for emoji reactions on the PR body (bots like Codex may 👍 the PR instead of leaving a formal review).
+   - Run `gh api repos/{owner}/{repo}/issues/{number}/reactions --jq '.[] | {user: .user.login, content: .content}'` to check for emoji reactions on the PR body (bots like Codex may 👍 the PR instead of leaving a formal review). Note: an 👀 (eyes) reaction means the bot is still reviewing and has not finished - only a 👍 (thumbsup) or actual review comments count as engagement.
    - The PR counts as **reviewed** if at least one of the following is true:
      - A GitHub user (not the PR author) has left an `APPROVED` review.
      - A GitHub user (not the PR author) has left a `COMMENTED` or `CHANGES_REQUESTED` review.
-     - An AI bot reviewer has engaged via reviews, comments, or emoji reactions (look for usernames containing `codex`, `copilot`, `claude`, `coderabbit`, `github-actions`, or `[bot]` suffix).
+     - An AI bot reviewer has engaged via reviews, comments, or a 👍 (thumbsup) emoji reaction (look for usernames containing `codex`, `copilot`, `claude`, `coderabbit`, `github-actions`, or `[bot]` suffix). An 👀 (eyes) reaction means the bot is still working and does NOT count.
    - If the PR has **not been reviewed by anyone**, raise this as a concern to the user. Do not proceed without their explicit approval.
    - If the PR has unresolved `CHANGES_REQUESTED` reviews, raise this as a concern.
 

@@ -19,7 +19,7 @@ Review the open PR for the current branch: check for new feedback and CI status,
    - Run `gh api repos/{owner}/{repo}/pulls/{number}/reviews` to get reviews.
    - Run `gh api repos/{owner}/{repo}/pulls/{number}/comments` to get inline comments.
    - Run `gh api repos/{owner}/{repo}/issues/{number}/comments` to get top-level comments.
-   - Run `gh api repos/{owner}/{repo}/issues/{number}/reactions` to check for emoji reactions on the PR body (bots like Codex may 👍 the PR instead of leaving a formal review).
+   - Run `gh api repos/{owner}/{repo}/issues/{number}/reactions` to check for emoji reactions on the PR body (bots like Codex may 👍 the PR instead of leaving a formal review). Note: an 👀 (eyes) reaction means the bot is still reviewing - it has not finished yet. Only a 👍 (thumbsup) reaction or actual review comments count as engagement.
    - Filter to comments/reviews that arrived **after the last push** (compare timestamps against `git log -1 --format=%cI` of HEAD). If unsure, show all unresolved comments.
    - Summarise any new feedback to the user.
 
@@ -47,6 +47,7 @@ Review the open PR for the current branch: check for new feedback and CI status,
    - Run relevant tests/lints locally to verify the fix.
    - Commit with a clear message describing what was fixed and why.
    - Push to the branch.
+   - Resolve the addressed review threads on GitHub using the GraphQL API (`gh api graphql -f query='mutation { resolveReviewThread(input:{threadId:"THREAD_NODE_ID"}) { thread { isResolved } } }'`). Get thread IDs by querying the PR's review threads first.
    - Report the updated state.
 
 ## Notes

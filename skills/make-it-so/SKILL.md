@@ -48,9 +48,9 @@ Loop until the PR is ready to merge. On each iteration check CI, reviews, and fe
 
 ### Reviews and feedback
 
-- Fetch reviews, inline comments, top-level comments, and emoji reactions on the PR body (bots like Codex may 👍 instead of formally reviewing).
+- Fetch reviews, inline comments, top-level comments, and emoji reactions on the PR body (bots like Codex may 👍 instead of formally reviewing). Note: an 👀 (eyes) reaction from a bot means it is still reviewing and has not finished - this does NOT count as engagement.
 - For each piece of feedback, evaluate whether it's actionable and correct by reading the relevant code. **Always verify bot/automated reviewer claims against the actual code before acting** — they frequently hallucinate.
-- If feedback is actionable and clearly correct → fix the code, then **go back to Phase 1** (self-review the fix, commit, push, and re-enter the monitor loop). This ensures every change gets the same review-commit-push cycle.
+- If feedback is actionable and clearly correct → fix the code, then resolve the review thread on GitHub. To resolve a thread: first get the thread node ID from the PR's review threads (`gh api graphql -f query='{ repository(owner:"OWNER", name:"REPO") { pullRequest(number:NUM) { reviewThreads(first:50) { nodes { id isResolved comments(first:1) { nodes { body } } } } } } }'`), then resolve it (`gh api graphql -f query='mutation { resolveReviewThread(input:{threadId:"THREAD_NODE_ID"}) { thread { isResolved } } }'`). Then **go back to Phase 1** (self-review the fix, commit, push, and re-enter the monitor loop). This ensures every change gets the same review-commit-push cycle.
 - Questions, incorrect claims, or feedback requiring judgement → report to the user and **stop**.
 
 ### Merge readiness check
@@ -58,14 +58,14 @@ Loop until the PR is ready to merge. On each iteration check CI, reviews, and fe
 All of the following must be true to proceed to Phase 5:
 
 - CI is fully green (no pending, no failed checks).
-- At least one AI bot has engaged with the PR — via review, comment, or emoji reaction. Look for usernames containing `codex`, `copilot`, `claude`, `coderabbit`, `github-actions`, or a `[bot]` suffix.
+- At least one AI bot has engaged with the PR — via review, comment, or a 👍 (thumbsup) emoji reaction. Look for usernames containing `codex`, `copilot`, `claude`, `coderabbit`, `github-actions`, or a `[bot]` suffix. An 👀 (eyes) reaction means the bot is still working and does NOT satisfy this condition - keep waiting.
 - No unresolved `CHANGES_REQUESTED` reviews.
 
 If not all met → wait and loop again.
 
 ### Loop pacing
 
-Check frequently at first (~90s) while waiting for CI to kick off, then back off to ~270s while waiting for CI and reviews. Don't exceed 270s — stay within the cache window.
+Use 60s intervals for wakeup scheduling (the runtime minimum). The user prefers frequent checks over waiting.
 
 ## Phase 5: Merge
 
