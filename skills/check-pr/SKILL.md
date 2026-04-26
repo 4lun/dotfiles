@@ -20,7 +20,7 @@ Review the open PR for the current branch: check for new feedback and CI status,
    - Run `gh api repos/{owner}/{repo}/pulls/{number}/comments` to get inline comments.
    - Run `gh api repos/{owner}/{repo}/issues/{number}/comments` to get top-level comments.
    - Run `gh api repos/{owner}/{repo}/issues/{number}/reactions` to check for emoji reactions on the PR body (bots like Codex may 👍 the PR instead of leaving a formal review). Note: an 👀 (eyes) reaction means the bot is still reviewing - it has not finished yet. Only a 👍 (thumbsup) reaction or actual review comments count as engagement.
-   - Filter to comments/reviews that arrived **after the last push** (compare timestamps against `git log -1 --format=%cI` of HEAD). If unsure, show all unresolved comments.
+   - Filter to comments/reviews that arrived **after the last push**. **Do not compare ISO 8601 timestamps as strings** — GitHub returns UTC (`...Z`) but `git log %cI` returns the local-tz offset (e.g. `+01:00`), and lexical sort gives the wrong answer when the offsets differ. Convert to epoch seconds first, e.g. `HEAD_EPOCH=$(git log -1 --format=%ct HEAD)` then `gh api ... --jq "[.[] | select((.created_at // .submitted_at) | fromdateiso8601 > $HEAD_EPOCH)]"`. If unsure, show all unresolved comments.
    - Summarise any new feedback to the user.
 
 3. **Evaluate feedback**:
