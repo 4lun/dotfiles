@@ -26,11 +26,6 @@ export PATH="$PATH:./vendor/bin"
 # Reload DNS on OSX - Source: http://alias.sh/reload-dns-osx
 	alias flushdns="dscacheutil -flushcache"
 
-# OS X keeps a log of all downloaded files, commands for listing and removing records
-# http://news.ycombinator.com/item?id=5080350 & http://www.macgasm.net/2013/01/18/good-morning-your-mac-keeps-a-log-of-all-your-downloads/
-	alias ls_dl_log="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'select LSQuarantineDataURLString from LSQuarantineEvent'"
-	alias rm_dl_log="sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'vacuum'"
-
 # Cycle MAC address for WiFi adapter - Source: https://remysharp.com/2017/05/29/getting-free-wifi
 	alias freewifi="sudo ifconfig en0 ether `openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'`; sudo ifconfig en0 ether"
 
