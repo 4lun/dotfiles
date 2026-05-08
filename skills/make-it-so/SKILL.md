@@ -58,7 +58,7 @@ Loop until the PR is ready to merge. On each iteration check CI, reviews, and fe
 All of the following must be true to proceed to Phase 5:
 
 - CI is fully green (no pending, no failed checks).
-- At least one AI bot has engaged with the PR — via review, comment, or a 👍 (thumbsup) emoji reaction. Look for usernames containing `codex`, `copilot`, `claude`, `coderabbit`, `github-actions`, or a `[bot]` suffix. An 👀 (eyes) reaction means the bot is still working and does NOT satisfy this condition - keep waiting.
+- At least one AI bot has engaged with **the current HEAD commit** of the PR - via review, comment, or 👍 reaction on that commit. If you've pushed new commits since the last bot engagement (e.g. after addressing review feedback), the prior engagement does NOT carry over: wait for the bot to re-review the latest commit, or for an explicit 👍 on it. Old reviews on superseded commits don't count, even if their comments were addressed and resolved. Look for usernames containing `codex`, `copilot`, `claude`, `coderabbit`, `github-actions`, or a `[bot]` suffix. An 👀 (eyes) reaction means the bot is still working and does NOT satisfy this condition - keep waiting.
 - No unresolved `CHANGES_REQUESTED` reviews.
 
 If not all met → wait and loop again.
