@@ -53,6 +53,36 @@ Loop until the PR is ready to merge. On each iteration check CI, reviews, and fe
 - If feedback is actionable and clearly correct → fix the code, then resolve the review thread on GitHub. To resolve a thread: first get the thread node ID from the PR's review threads (`gh api graphql -f query='{ repository(owner:"OWNER", name:"REPO") { pullRequest(number:NUM) { reviewThreads(first:50) { nodes { id isResolved comments(first:1) { nodes { body } } } } } } }'`), then resolve it (`gh api graphql -f query='mutation { resolveReviewThread(input:{threadId:"THREAD_NODE_ID"}) { thread { isResolved } } }'`). Then **go back to Phase 1** (self-review the fix, commit, push, and re-enter the monitor loop). This ensures every change gets the same review-commit-push cycle.
 - Questions, incorrect claims, or feedback requiring judgement → report to the user and **stop**.
 
+### Re-request Copilot after pushing new commits
+
+GitHub does **not** auto-re-review on push, so after you push new commits (a CI fix or addressing feedback), re-request Copilot's review - otherwise the merge-readiness check waits forever for a review of the new HEAD that never comes. Only do this if Copilot reviews this PR (it appears in the PR's reviews or requested reviewers).
+
+**Do not use the REST `POST .../requested_reviewers` endpoint to re-trigger Copilot.** For the Copilot bot it returns `201` but is a silent no-op: it creates no new `review_requested` event, so Copilot never re-reviews (this is why the web "re-request review" button otherwise has to be clicked by hand). Use the GraphQL `requestReviews` mutation instead:
+
+1. Get the PR node id and Copilot's bot node id in one query (the bot id is repo-specific, so discover it - never hard-code it). Note the union fragment shape: `requestedReviewer` is a bare union, so `login` must sit inside `... on Bot`, not be selected directly:
+
+   ```
+   gh api graphql -f query='{ repository(owner:"OWNER", name:"REPO") { pullRequest(number:NUM) {
+     id
+     reviews(first:50){ nodes { author { __typename login ... on Bot { id } } } }
+     timelineItems(itemTypes:[REVIEW_REQUESTED_EVENT], last:50){ nodes { ... on ReviewRequestedEvent { requestedReviewer { __typename ... on Bot { login id } } } } }
+   } } }'
+   ```
+
+   `pullRequest.id` is the PR node id. The Copilot bot node id is the `id` of the `Bot` whose login is `copilot-pull-request-reviewer`; it shows up as a review author and/or a requested reviewer and both carry the same id. Querying both sources matters: a repo that auto-requests Copilot on push has it in `requestedReviewer` before any review exists. If the repo has no Copilot review enabled the query returns no such bot - skip the re-request and do not fail the loop.
+
+2. Request the re-review with that bot id (keep the double quotes around the id - it is an opaque string like `BOT_kgDOCnlnWA`):
+
+   ```
+   gh api graphql -f query='mutation { requestReviews(input:{pullRequestId:"PR_NODE_ID", botIds:["COPILOT_BOT_ID"], union:true}) { pullRequest { id } } }'
+   ```
+
+   GraphQL can return HTTP 200 with a top-level `errors` array, so check the response carried no `errors` rather than trusting the exit code.
+
+3. Confirm it took: re-run the step-1 query and check the newest `REVIEW_REQUESTED_EVENT` is Copilot and Copilot is back in `requested_reviewers`. If Copilot was **already** a requested reviewer (some repos auto-request on push), the `union` add likely makes no state change and won't re-trigger - in that case only, remove it first with `gh api --method DELETE "repos/<owner>/<repo>/pulls/<number>/requested_reviewers" -f 'reviewers[]=Copilot'` (tolerate a non-2xx), then **re-read** `requested_reviewers` and confirm Copilot is absent before re-running the mutation, so the absent->present transition actually fires the review. If the DELETE didn't remove it, surface that rather than assuming the re-add worked.
+
+Only Copilot needs this nudge; Codex and other bots re-review on push on their own.
+
 ### Merge readiness check
 
 All of the following must be true to proceed to Phase 5:

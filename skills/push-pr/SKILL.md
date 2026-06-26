@@ -43,6 +43,7 @@ Push the current branch and open or update a GitHub pull request.
    - Push first if needed (per step 2).
    - For a **new PR**: run `gh pr create --base <base> --head <branch> --title "..." --body "..."` with the body passed via a heredoc.
    - For an **existing PR**: push, then run `gh pr edit` if the title or body needs updating.
+   - **Re-request Copilot** if it reviews this PR and you pushed new commits (GitHub doesn't auto-re-review on push). The REST `POST .../requested_reviewers` is a silent no-op for the Copilot bot (returns `201`, no new `review_requested` event), so use the GraphQL `requestReviews` mutation: discover the PR node id and Copilot's bot node id from reviews **and** requested reviewers (`gh api graphql -f query='{ repository(owner:"OWNER",name:"REPO"){ pullRequest(number:NUM){ id reviews(first:50){ nodes{ author{ __typename login ... on Bot{ id } } } } timelineItems(itemTypes:[REVIEW_REQUESTED_EVENT],last:50){ nodes{ ... on ReviewRequestedEvent{ requestedReviewer{ __typename ... on Bot{ login id } } } } } } } }'`; the bot id is the `Bot` whose login is `copilot-pull-request-reviewer`), then request it (`gh api graphql -f query='mutation { requestReviews(input:{pullRequestId:"PR_NODE_ID", botIds:["COPILOT_BOT_ID"], union:true}) { pullRequest { id } } }'`). If no such bot is found (Copilot review not enabled), skip it.
    - Return the PR URL.
 
 ## Notes
