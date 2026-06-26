@@ -26,7 +26,7 @@ Push the current branch and open or update a GitHub pull request.
    - Run `git diff <base>...HEAD --stat` for scope.
    - Read key changed files briefly if extra context is needed to write the body.
    - **Title**: short (under 70 chars), Conventional Commits style (`feat:`, `fix:`, `refactor:`, `chore:`, etc., no scope). If the branch has a single commit, default to that commit's subject.
-   - **Body**: keep it short. Lead with what the change does, then a sentence on *why* if it's not obvious from the title. Typically 2-5 short sentences or one tight paragraph. **Skip headings** (`## Context`, `## Changes`, `## Test plan`, etc.) by default. **Skip test plans** unless there's something the reviewer genuinely needs to know (manual verification, risky migration, follow-up work). Reviewers scan; don't make them read.
+   - **Body**: keep it short. Lead with what the change does, then a sentence on *why* if it's not obvious from the title. Typically 2-5 short sentences or one tight paragraph. **Skip headings** (`## Context`, `## Changes`, `## Test plan`, etc.) by default. **Skip test plans** unless there's something the reviewer genuinely needs to know (manual verification, risky migration, follow-up work). Reviewers scan; don't make them read. Don't include links to a Claude session in a PR body unless prompted to.
 
 4. **If a PR already exists**:
    - Compare the existing title and body against the current commits. If the scope has changed (new commits, amended commits, different focus), suggest updated title and/or body.
