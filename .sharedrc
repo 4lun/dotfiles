@@ -90,3 +90,6 @@ export PATH="$PATH:./vendor/bin"
 	allAnsiColors() {
 		for i in {0..255}; do printf "\e[38;5;${i}m%3d " $i; done; echo; printf "\e[0m"
 	}
+
+# Machine-local / vault-provided aliases (e.g. Foundation's Shared/.sharedrc symlink)
+	[ -f ~/.bash_aliases ] && source ~/.bash_aliases
